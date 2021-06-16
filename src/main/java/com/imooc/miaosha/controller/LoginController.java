@@ -38,11 +38,20 @@ public class LoginController {
         return "login";
     }
 
+//    @RequestMapping("/do_login")
+//    @ResponseBody
+//    public Result<boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo){
+//        log.info(loginVo.toString());
+//        Boolean b = miaoshaUserService.login(response, loginVo);
+//        return Result.success(true);
+//    }
+
     @RequestMapping("/do_login")
     @ResponseBody
-    public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo){
+    public Result<String> doLogin(HttpServletResponse response, @Valid LoginVo loginVo) {
         log.info(loginVo.toString());
-        Boolean b = miaoshaUserService.login(response, loginVo);
-        return Result.success(true);
+        //登录
+        String token = miaoshaUserService.login(response, loginVo);
+        return Result.success(token);
     }
 }

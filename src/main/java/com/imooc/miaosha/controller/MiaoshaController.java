@@ -35,9 +35,12 @@ public class MiaoshaController {
     GoodsService goodsService;
     private static Logger log = LoggerFactory.getLogger(MiaoshaController.class);
 
+    // 5000 * 10
+    // QPS 5,992.33
     @RequestMapping("/do_miaosha")
     public String do_miaosha(Model model, MiaoshaUser user,
                              @Param("goodsId")long goodsId){
+        System.err.println("user.toString(): " + user.toString());
         model.addAttribute("user", user);
         if(user == null){
             return "login";
