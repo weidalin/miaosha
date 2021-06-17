@@ -40,7 +40,7 @@ public class LoginController {
 
 //    @RequestMapping("/do_login")
 //    @ResponseBody
-//    public Result<boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo){
+//    public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo){
 //        log.info(loginVo.toString());
 //        Boolean b = miaoshaUserService.login(response, loginVo);
 //        return Result.success(true);

@@ -5,6 +5,8 @@ import com.imooc.miaosha.dao.OrderDao;
 import com.imooc.miaosha.domain.MiaoshaOrder;
 import com.imooc.miaosha.domain.MiaoshaUser;
 import com.imooc.miaosha.domain.OrderInfo;
+import com.imooc.miaosha.redis.OrderKey;
+import com.imooc.miaosha.redis.RedisService;
 import com.imooc.miaosha.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,33 +19,42 @@ public class OrderService {
     @Autowired
     OrderDao orderDao;
 
-    public MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(Long id, long goodsId) {
+    @Autowired
+    RedisService redisService;
 
-        return orderDao.getMiaoshaOrderByUserIdGoodsId(id, goodsId);
-
+    public MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(Long userId, long goodsId) {
+        return redisService.get(OrderKey.getMiaoshaOrderByUidGid, userId+"_"+goodsId, MiaoshaOrder.class);
+//        return orderDao.getMiaoshaOrderByUserIdGoodsId(id, goodsId);
     }
 
     @Transactional
-    public OrderInfo createOrder(MiaoshaUser user, GoodsVo goodsVo) {
+    public OrderInfo createOrder(MiaoshaUser user, GoodsVo goods) {
         OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setCreateDate(new Date()); // 创建日期
-        orderInfo.setDeliveryAddrId(0L);    // 快递id
-        orderInfo.setGoodsCount(1); // 商品数量
-        orderInfo.setGoodsId(goodsVo.getId());  // 商品id
-        orderInfo.setGoodsName(goodsVo.getGoodsName()); // 商品名称
-        orderInfo.setGoodsPrice(goodsVo.getMiaoshaPrice()); // 秒杀价格
-        orderInfo.setOrderChannel(1);   // 渠道，安卓，苹果，pc
-        orderInfo.setStatus(0); // 订单状态
+        orderInfo.setCreateDate(new Date());
+        orderInfo.setDeliveryAddrId(0L);
+        orderInfo.setGoodsCount(1);
+        orderInfo.setGoodsId(goods.getId());
+        orderInfo.setGoodsName(goods.getGoodsName());
+        orderInfo.setGoodsPrice(goods.getMiaoshaPrice());
+        orderInfo.setOrderChannel(1);
+        orderInfo.setStatus(0);
         orderInfo.setUserId(user.getId());
         long orderId = orderDao.insert(orderInfo);
-
         MiaoshaOrder miaoshaOrder = new MiaoshaOrder();
-        miaoshaOrder.setGoodsId(goodsVo.getId());
+        miaoshaOrder.setGoodsId(goods.getId());
         miaoshaOrder.setOrderId(orderId);
         miaoshaOrder.setUserId(user.getId());
-
         orderDao.insertMiaoshaOrder(miaoshaOrder);
-        return orderInfo;
 
+        redisService.set(OrderKey.getMiaoshaOrderByUidGid, ""+user.getId()+"_"+goods.getId(), miaoshaOrder);
+
+
+        System.out.println("createOrder.............");
+        return orderInfo;
+    }
+
+
+    public OrderInfo getOrderById(long orderId) {
+        return orderDao.getOrderById(orderId);
     }
 }

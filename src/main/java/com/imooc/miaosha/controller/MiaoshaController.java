@@ -4,6 +4,7 @@ import com.imooc.miaosha.domain.MiaoshaOrder;
 import com.imooc.miaosha.domain.MiaoshaUser;
 import com.imooc.miaosha.domain.OrderInfo;
 import com.imooc.miaosha.result.CodeMsg;
+import com.imooc.miaosha.result.Result;
 import com.imooc.miaosha.service.GoodsService;
 import com.imooc.miaosha.service.MiaoshaService;
 import com.imooc.miaosha.service.MiaoshaUserService;
@@ -16,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -37,36 +41,75 @@ public class MiaoshaController {
 
     // 5000 * 10
     // QPS 5,992.33
-    @RequestMapping("/do_miaosha")
-    public String do_miaosha(Model model, MiaoshaUser user,
-                             @Param("goodsId")long goodsId){
-        System.err.println("user.toString(): " + user.toString());
+    @RequestMapping(value="/do_miaosha", method= RequestMethod.POST)
+    @ResponseBody
+    public Result<OrderInfo> do_miaosha(Model model, MiaoshaUser user,
+                                        @RequestParam("goodsId")long goodsId){
         model.addAttribute("user", user);
         if(user == null){
-            return "login";
+            return Result.error(CodeMsg.SERVER_ERROR);
         }
         // 判断库存
         GoodsVo goodsVo = goodsService.getGoodsVoByGoodsId(goodsId);
         int stock = goodsVo.getStockCount();
         if(stock <= 0){
-            model.addAttribute("errmsg", CodeMsg.MIAO_SHA_OVER.getMsg());
-            return "miaosha_fail";
+            return Result.error(CodeMsg.MIAO_SHA_OVER);
+//            model.addAttribute("errmsg", CodeMsg.MIAO_SHA_OVER.getMsg());
+//            return "miaosha_fail";
         }
         // 判断是否已经秒杀过该商品
         MiaoshaOrder order;
         order = orderService.getMiaoshaOrderByUserIdGoodsId(user.getId(), goodsId);
         if(order != null){
-            model.addAttribute("errmsg", CodeMsg.REPEATE_MIAOSHA.getMsg());
-            System.err.println("这个用户已经有该商品的秒杀订单了...");
-            return "miaosha_fail";
+
+            return Result.error(CodeMsg.REPEATE_MIAOSHA);
+//            model.addAttribute("errmsg", CodeMsg.REPEATE_MIAOSHA.getMsg());
+//            System.err.println("这个用户已经有该商品的秒杀订单了...");
+//            return "miaosha_fail";
         }
         // 减库存，下订单，写入秒杀订单
         OrderInfo orderInfo = miaoshaService.miaosha(user, goodsVo);
-        model.addAttribute("orderInfo", orderInfo);
-        model.addAttribute("goods", goodsVo);
-        return "order_detail";
+//        model.addAttribute("orderInfo", orderInfo);
+//        model.addAttribute("goods", goodsVo);
+//        return "order_detail";
+        return Result.success(orderInfo);
+
+
 
     }
+
+
+//    @RequestMapping("/do_miaosha")
+//    public String do_miaosha(Model model, MiaoshaUser user,
+//                             @Param("goodsId")long goodsId){
+//        System.err.println("user.toString(): " + user.toString());
+//        model.addAttribute("user", user);
+//        if(user == null){
+//            return "login";
+//        }
+//        // 判断库存
+//        GoodsVo goodsVo = goodsService.getGoodsVoByGoodsId(goodsId);
+//        int stock = goodsVo.getStockCount();
+//        if(stock <= 0){
+//            model.addAttribute("errmsg", CodeMsg.MIAO_SHA_OVER.getMsg());
+//            return "miaosha_fail";
+//        }
+//        // 判断是否已经秒杀过该商品
+//        MiaoshaOrder order;
+//        order = orderService.getMiaoshaOrderByUserIdGoodsId(user.getId(), goodsId);
+//        if(order != null){
+//            model.addAttribute("errmsg", CodeMsg.REPEATE_MIAOSHA.getMsg());
+//            System.err.println("这个用户已经有该商品的秒杀订单了...");
+//            return "miaosha_fail";
+//        }
+//        // 减库存，下订单，写入秒杀订单
+//        OrderInfo orderInfo = miaoshaService.miaosha(user, goodsVo);
+//        model.addAttribute("orderInfo", orderInfo);
+//        model.addAttribute("goods", goodsVo);
+//        return "order_detail";
+//
+//    }
+
 
 
 }

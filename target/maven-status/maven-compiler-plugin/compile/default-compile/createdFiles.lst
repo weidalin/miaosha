@@ -1,7 +1,9 @@
 com\imooc\miaosha\util\ValidatorUtil.class
+com\imooc\miaosha\redis\GoodsKey.class
 com\imooc\miaosha\domain\OrderInfo.class
 com\imooc\miaosha\dao\GoodsDao.class
 com\imooc\miaosha\service\GoodsService.class
+com\imooc\miaosha\util\DBUtil.class
 com\imooc\miaosha\exception\GlobalExceptionHandler.class
 com\imooc\miaosha\redis\RedisConfig.class
 com\imooc\miaosha\controller\MiaoshaController.class
@@ -9,6 +11,7 @@ com\imooc\miaosha\domain\User.class
 com\imooc\miaosha\controller\UserController.class
 com\imooc\miaosha\service\MiaoshaUserService.class
 com\imooc\miaosha\util\MD5Util.class
+com\imooc\miaosha\util\UserUtil.class
 com\imooc\miaosha\domain\MiaoshaGoods.class
 com\imooc\miaosha\dao\OrderDao.class
 com\imooc\miaosha\domain\Goods.class

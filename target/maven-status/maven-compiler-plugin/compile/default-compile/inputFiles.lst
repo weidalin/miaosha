@@ -2,6 +2,7 @@ D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\domain\Goods.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\controller\LoginController.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\domain\MiaoshaUser.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\controller\GoodsController.java
+D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\redis\GoodsKey.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\domain\MiaoshaGoods.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\vo\GoodsVo.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\redis\RedisPoolFactory.java
@@ -16,6 +17,7 @@ D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\service\UserService.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\result\Result.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\validator\IsMobileValidator.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\dao\MiaoshaUserDao.java
+D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\util\UserUtil.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\redis\RedisConfig.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\redis\OrderKey.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\validator\IsMobile.java
@@ -32,6 +34,7 @@ D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\redis\UserKey.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\exception\GlobalException.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\controller\SampleController.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\service\MiaoshaService.java
+D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\util\DBUtil.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\webconfig\UserArgumentResolver.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\exception\GlobalExceptionHandler.java
 D:\IdeaProjects\miaosha\src\main\java\com\imooc\miaosha\redis\MiaoshaUserKey.java

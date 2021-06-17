@@ -1,12 +1,15 @@
 package com.imooc.miaosha.redis;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.util.Set;
 
 @Service
 public class RedisService {
@@ -27,6 +30,7 @@ public class RedisService {
             jedis = jedisPool.getResource();
             // 生成真正的key
             String realKey = prefix.getPrefix() + key;
+            System.out.println("========get " + realKey + " from redis========");
             String str = jedis.get(realKey);
             T t = stringToBean(str, clazz);
             return t;
@@ -79,6 +83,25 @@ public class RedisService {
             // 生成真正的key
             String realKey = prefix.getPrefix() + key;
             return jedis.exists(realKey);
+        }finally {
+            returnToPool(jedis);
+        }
+    }
+
+    /**
+     * 删除
+     * @param prefix
+     * @param key
+     * @return
+     */
+    public boolean delete(KeyPrefix prefix, String key){
+        Jedis jedis = null;
+        try{
+            jedis = jedisPool.getResource();
+            // 生成真正的key
+            String realKey = prefix.getPrefix() + key;
+            long ret = jedis.del(realKey);
+            return ret > 0;
         }finally {
             returnToPool(jedis);
         }
@@ -159,6 +182,8 @@ public class RedisService {
             jedis.close();
         }
     }
+
+
 
 
 }
