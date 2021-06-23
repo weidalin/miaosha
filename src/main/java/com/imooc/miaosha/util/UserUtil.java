@@ -33,7 +33,7 @@ public class UserUtil {
 			user.setPassword(MD5Util.inputPassToDbPass("123456", user.getSalt()));
 			users.add(user);
 		}
-		System.out.println("create user");
+//		System.out.println("create user");
 //		//插入数据库
 //		Connection conn = DBUtil.getConn();
 //		String sql = "insert into miaosha_user(login_count, nickname, register_date, salt, password, id)values(?,?,?,?,?,?)";

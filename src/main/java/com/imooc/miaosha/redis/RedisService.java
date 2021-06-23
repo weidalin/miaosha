@@ -145,7 +145,7 @@ public class RedisService {
         }
     }
 
-    private <T> String beanToString(T value) {
+    public <T> String beanToString(T value) {
         if(value == null){
             return null;
         }
@@ -162,7 +162,7 @@ public class RedisService {
 
     }
 
-    private <T> T stringToBean(String str, Class<T> clazz) {
+    public static <T> T stringToBean(String str, Class<T> clazz) {
         if(str == null || str.length() <= 0 || clazz == null){
             return null;
         }

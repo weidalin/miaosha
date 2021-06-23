@@ -30,14 +30,15 @@ public class GoodsService {
 	}
 
 	@Transactional
-	public void reduceStock(GoodsVo goods) {
+	public boolean reduceStock(GoodsVo goods) {
 		MiaoshaGoods g = new MiaoshaGoods();
 		g.setGoodsId(goods.getId());
-		int reduceStock = goodsDao.reduceStock(g);
-		reduceStock = 1 / reduceStock;
+		int ret = goodsDao.reduceStock(g);
+		return ret > 0;
+//		reduceStock = 1 / reduceStock;
 //		if(reduceStock == 0){
 //			throw new GlobalException(CodeMsg.MIAO_SHA_OVER);
 //		}
-		System.out.println("reduceStock............." + reduceStock);
+//		System.out.println("reduceStock............." + reduceStock);
 	}
 }

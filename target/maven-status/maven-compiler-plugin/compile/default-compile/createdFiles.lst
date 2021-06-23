@@ -1,3 +1,4 @@
+com\imooc\miaosha\rabbitmq\MQSender.class
 com\imooc\miaosha\util\ValidatorUtil.class
 com\imooc\miaosha\redis\GoodsKey.class
 com\imooc\miaosha\domain\OrderInfo.class
@@ -12,6 +13,7 @@ com\imooc\miaosha\controller\UserController.class
 com\imooc\miaosha\service\MiaoshaUserService.class
 com\imooc\miaosha\util\MD5Util.class
 com\imooc\miaosha\util\UserUtil.class
+com\imooc\miaosha\controller\OrderController.class
 com\imooc\miaosha\domain\MiaoshaGoods.class
 com\imooc\miaosha\dao\OrderDao.class
 com\imooc\miaosha\domain\Goods.class
@@ -26,12 +28,14 @@ com\imooc\miaosha\util\UUIDUtil.class
 com\imooc\miaosha\validator\IsMobile.class
 com\imooc\miaosha\dao\UserDao.class
 com\imooc\miaosha\domain\MiaoshaOrder.class
+com\imooc\miaosha\redis\MiaoshaKey.class
 com\imooc\miaosha\redis\MiaoshaUserKey.class
 com\imooc\miaosha\exception\GlobalException.class
 com\imooc\miaosha\redis\BasePrefix.class
 com\imooc\miaosha\webconfig\UserArgumentResolver.class
 com\imooc\miaosha\redis\KeyPrefix.class
 com\imooc\miaosha\dao\MiaoshaUserDao.class
+com\imooc\miaosha\rabbitmq\MQConfig.class
 com\imooc\miaosha\controller\SampleController.class
 com\imooc\miaosha\domain\MiaoshaUser.class
 com\imooc\miaosha\result\CodeMsg.class
@@ -39,7 +43,11 @@ com\imooc\miaosha\service\OrderService.class
 com\imooc\miaosha\webconfig\WebConfig.class
 com\imooc\miaosha\controller\GoodsController.class
 com\imooc\miaosha\vo\LoginVo.class
+com\imooc\miaosha\vo\GoodsDetailVo.class
 com\imooc\miaosha\validator\IsMobileValidator.class
+com\imooc\miaosha\vo\OrderDetailVo.class
 com\imooc\miaosha\vo\GoodsVo.class
+com\imooc\miaosha\rabbitmq\MQReceiver.class
 com\imooc\miaosha\redis\RedisPoolFactory.class
+com\imooc\miaosha\rabbitmq\MiaoshaMessage.class
 com\imooc\miaosha\Application.class
