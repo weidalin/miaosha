@@ -1,6 +1,7 @@
 package com.imooc.miaosha.webconfig;
 
 import com.alibaba.druid.util.StringUtils;
+import com.imooc.miaosha.access.UserContext;
 import com.imooc.miaosha.domain.MiaoshaUser;
 import com.imooc.miaosha.service.MiaoshaUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,33 +31,41 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
                                   ModelAndViewContainer modelAndViewContainer,
                                   NativeWebRequest nativeWebRequest,
                                   WebDataBinderFactory webDataBinderFactory) throws Exception {
-        HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-        HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
-
-        //                          @CookieValue(value=MiaoshaUserService.COOKIE_NAME_TOKEN, required = false)  String cookieToken,
-//                          @RequestParam(value=MiaoshaUserService.COOKIE_NAME_TOKEN, required = false) String paramToken,
-
-
-        String paramToken = request.getParameter(MiaoshaUserService.COOKIE_NAME_TOKEN);
-        String cookieToken = getCookieValue(request, MiaoshaUserService.COOKIE_NAME_TOKEN);
-        if(StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)){
-            return "login";
-        }
-        String token = StringUtils.isEmpty(paramToken) ? cookieToken :  paramToken;
-        MiaoshaUser user = miaoshaUserService.getByToken(response, token);
-        return user;
+        return UserContext.getUser();
     }
 
-    private String getCookieValue(HttpServletRequest request, String cookieNameToken) {
-        Cookie[] cookies = request.getCookies();
-        if(cookies == null || cookies.length <= 0){
-            return null;
-        }
-        for(Cookie cookie : cookies){
-            if(cookie.getName().equals(cookieNameToken)){
-                return cookie.getValue();
-            }
-        }
-        return null;
-    }
+//    @Override
+//    public Object resolveArgument(MethodParameter methodParameter,
+//                                  ModelAndViewContainer modelAndViewContainer,
+//                                  NativeWebRequest nativeWebRequest,
+//                                  WebDataBinderFactory webDataBinderFactory) throws Exception {
+//        HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
+//        HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
+//
+//        //                          @CookieValue(value=MiaoshaUserService.COOKIE_NAME_TOKEN, required = false)  String cookieToken,
+////                          @RequestParam(value=MiaoshaUserService.COOKIE_NAME_TOKEN, required = false) String paramToken,
+//
+//
+//        String paramToken = request.getParameter(MiaoshaUserService.COOKIE_NAME_TOKEN);
+//        String cookieToken = getCookieValue(request, MiaoshaUserService.COOKIE_NAME_TOKEN);
+//        if(StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)){
+//            return "login";
+//        }
+//        String token = StringUtils.isEmpty(paramToken) ? cookieToken :  paramToken;
+//        MiaoshaUser user = miaoshaUserService.getByToken(response, token);
+//        return user;
+//    }
+//
+//    private String getCookieValue(HttpServletRequest request, String cookieNameToken) {
+//        Cookie[] cookies = request.getCookies();
+//        if(cookies == null || cookies.length <= 0){
+//            return null;
+//        }
+//        for(Cookie cookie : cookies){
+//            if(cookie.getName().equals(cookieNameToken)){
+//                return cookie.getValue();
+//            }
+//        }
+//        return null;
+//    }
 }
